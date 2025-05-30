@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
-from models import User
+from models import User, UserCreate
 from auth import get_password_hash, verify_password, create_access_token, get_current_user
 from database import users_collection
 from fastapi.security import OAuth2PasswordRequestForm
@@ -8,14 +8,15 @@ from datetime import datetime, timedelta
 router = APIRouter()
 
 @router.post("/register")
-def register(user: User):
+def register(user: UserCreate):
     if users_collection.find_one({"email": user.email}):
         raise HTTPException(status_code=400, detail="Email ya registrado")
     hashed_password = get_password_hash(user.password)
     users_collection.insert_one({
         "email": user.email,
+        "role": "user",
         "hashed_password": hashed_password,
-        "created_at": datetime.utcnow()
+        "created_at": datetime.utcnow() 
     })
     return {"message": "Usuario registrado exitosamente"}
 
@@ -36,5 +37,6 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()):
 async def read_me(current_user: dict = Depends(get_current_user)):
     return {
         "email": current_user["email"],
+        "role": current_user["role"],
         "created_at": current_user["created_at"]
     }
