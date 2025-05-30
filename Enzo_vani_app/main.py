@@ -4,6 +4,9 @@ from routes import products, subscribers, users, payments
 
 """
 Para lanzar el servidor: uvicorn main:app --reload --host 127.0.0.1 --port 8000
+
+Para lanzar SWAGGER UI para ver los endpoints: http://127.0.0.1:8000/docs#/
+
 """
 
 app = FastAPI()
