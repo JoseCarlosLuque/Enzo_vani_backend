@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import products, subscribers, users
+from routes import products, subscribers, users, payments
 
 """
 Para lanzar el servidor: uvicorn main:app --reload --host 127.0.0.1 --port 8000
@@ -19,3 +19,4 @@ app.add_middleware(
 app.include_router(products.router)
 app.include_router(subscribers.router)
 app.include_router(users.router)
+app.include_router(payments.router)

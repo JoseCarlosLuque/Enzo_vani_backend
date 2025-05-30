@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from typing import List
 
 class UserCreate(BaseModel):
     email: EmailStr
@@ -15,3 +16,13 @@ class Product(BaseModel):
     stock: int
     image: str
 
+class OrderItem(BaseModel):
+    name: str
+    price: float
+    quantity: int
+
+class Order(BaseModel):
+    user_email: str
+    items: List[OrderItem]
+    total_amount: float
+    status: str  # ej. "pending", "paid", "shipped"
