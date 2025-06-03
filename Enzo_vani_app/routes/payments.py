@@ -4,11 +4,14 @@ from pydantic import BaseModel
 from database import orders_collection
 from datetime import datetime
 import os
+import config
+
+middleware_uri = config.middleware_uri
 
 router = APIRouter()
 
-stripe.api_key = "sk_test_xxx" 
-endpoint_secret = "whsec_xxx"
+stripe.api_key = config.stripe_secret_key
+endpoint_secret = config.stripe_web_hook
 
 class CheckoutRequest(BaseModel):
     items: list  # [{ name, price, quantity }]
@@ -30,8 +33,8 @@ def create_checkout_session(checkout_request: CheckoutRequest):
                 for item in checkout_request.items
             ],
             mode="payment",
-            success_url="http://localhost:5173/success",
-            cancel_url="http://localhost:5173/cancel",
+            success_url=f"{middleware_uri}/success",
+            cancel_url=f"{middleware_uri}/cancel",
         )
         return {"url": session.url}
     except Exception as e:
