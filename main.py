@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from Enzo_vani_app.routes import products, subscribers, users, payments
+from routes import products, subscribers, users, payments
 
 """
 Para lanzar el servidor: uvicorn main:app --reload --host 127.0.0.1 --port 8000
