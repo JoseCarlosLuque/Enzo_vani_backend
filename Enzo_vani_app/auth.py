@@ -3,7 +3,7 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from fastapi import HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
-from database import users_collection
+from Enzo_vani_app.database import users_collection
 import config
 
 SECRET_KEY = config.auth_secret_key
